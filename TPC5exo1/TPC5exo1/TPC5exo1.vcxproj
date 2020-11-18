@@ -141,6 +141,9 @@
   <ItemGroup>
     <ClCompile Include="tpc5exo1.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="tp5exo1.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
