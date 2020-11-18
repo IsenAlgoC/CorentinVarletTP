@@ -7,8 +7,8 @@
 
 int main() {
 	int myTab1[10], myTab2 = NULL;
-	initTab(&myTab1, 10);
-	afficheTab(&myTab1, 10, nbElts);
+	initTab(myTab1, 10);
+	afficheTab(myTab1, 10, nbElts);
 	
 	
 	myTab2 = (int*)malloc(TAB2SIZE);//création de place en mémoire pour myTab2
