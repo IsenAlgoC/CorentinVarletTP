@@ -24,7 +24,10 @@ int main() {
 	for (compteur = 0; compteur < 20; compteur++) {// on remplace les 20 premières valeurs 
 		*(&myTab2 + compteur) = compteur + 1;
 	}
+	int dim = TAB2SIZE;
 
 	afficheTab(&myTab2, TAB2SIZE, 20); // puis on les affiche
+	ajoutElementDansTableau(myTab2, &dim, 20, 6);// on ajoute un élément
+	afficheTab(&myTab2, dim, 20); // et on l'affiche de nouveau
 	free (myTab2); // on détruit le tableau
 }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tab.h"
+# define TAILLEAJOUT 50
 
 
 int initTab(int* tab, int size) {//on initialise le tableau avec des 0
@@ -28,5 +29,25 @@ int afficheTab(int* tab, int size, int nbElts) {// on affiche les premiers éléme
 
 
 int * ajoutElementDansTableau(int* tab, int* size, int* nbElts, int element) {
-	
+	if (*nbElts < *size) {// on vérifie le cas qui nous arrange pour éviter d'agrandir le tableau
+		*(tab + *nbElts + 1) = element;
+		*nbElts++;
+		return nbElts;
+	}
+	else {
+		int* myTab = NULL;// on crée un autre tableau 
+		myTab = realloc(tab, TAILLEAJOUT);
+		if (myTab == NULL) {// on vérifie que notre nouveau tableau ne soit pas vide
+			printf_s("memoire insuffisante");
+			return NULL;
+		}
+		else {
+			*(myTab + *nbElts + 1) = element;
+			*nbElts++;
+			*size += TAILLEAJOUT;
+			return myTab;
+		}
+
+	}
+
 }
