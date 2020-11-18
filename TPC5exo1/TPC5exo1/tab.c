@@ -19,9 +19,10 @@ int afficheTab(int* tab, int size, int nbElts) {// on affice les premiers élémen
 	if (tab != NULL && size > 0 && size > nbElts) {
 		int compt = 0;
 		for (compt = 0; compt < nbElts; compt++) {
-			printf_s("%d", *(tab + compt));
+			printf_s("%d\n", *(tab + compt));
 		}
 		return 0;
 	}
 	else return -1;// renvoie une erreur si une des conditions n'est pas respectée
 }
+
