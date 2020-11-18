@@ -6,17 +6,17 @@
 
 
 int main() {
-	int myTab1[10], myTab2 = NULL;
+	int myTab1[10], myTab2 = NULL;// création des tableaux
 	initTab(myTab1, 10);
 	afficheTab(myTab1, 10, nbElts);
 	
 	
 	myTab2 = (int*)malloc(TAB2SIZE);//création de place en mémoire pour myTab2
-	if (myTab2 != NULL) {
+	if (myTab2 != NULL) {// on effectue le programme si la taille est suffisante 
 		initTab(myTab2, TAB2SIZE);
 	}
 	else {
-		printf_s("memoire insuffisante");
+		printf_s("memoire insuffisante");// message d'erreur si on a pas assez d'espace
 		return -1;
 	}
 		
