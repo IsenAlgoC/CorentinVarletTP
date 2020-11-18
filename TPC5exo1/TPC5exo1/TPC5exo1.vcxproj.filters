@@ -18,9 +18,15 @@
     <ClCompile Include="tpc5exo1.c">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="tab.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tp5exo1.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="tab.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
