@@ -15,7 +15,7 @@ int initTab(int* tab, int size) {//on initialise le tableau avec des 0
 }
 
 
-int afficheTab(int* tab, int size, int nbElts) {// on affice les premiers éléments du tableau
+int afficheTab(int* tab, int size, int nbElts) {// on affiche les premiers éléments du tableau
 	if (tab != NULL && size > 0 && size > nbElts) {
 		int compt = 0;
 		for (compt = 0; compt < nbElts; compt++) {
@@ -26,3 +26,7 @@ int afficheTab(int* tab, int size, int nbElts) {// on affice les premiers élémen
 	else return -1;// renvoie une erreur si une des conditions n'est pas respectée
 }
 
+
+int * ajoutElementDansTableau(int* tab, int* size, int* nbElts, int element) {
+	
+}
