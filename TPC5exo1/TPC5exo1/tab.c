@@ -29,23 +29,27 @@ int afficheTab(int* tab, int size, int nbElts) {// on affiche les premiers éléme
 
 
 int * ajoutElementDansTableau(int* tab, int* size, int* nbElts, int element) {
+	if (tab == NULL) {// on vérifie que le tableau n'est pas vide
+		return NULL;
+	}
 	if (*nbElts < *size) {// on vérifie le cas qui nous arrange pour éviter d'agrandir le tableau
-		*(tab + *nbElts + 1) = element;
+		tab [*nbElts] = element;
 		*nbElts++;
-		return nbElts;
+		return tab;
 	}
 	else {
 		int* myTab = NULL;// on crée un autre tableau 
-		myTab = realloc(tab, TAILLEAJOUT);
+		myTab = realloc(tab,(*size + TAILLEAJOUT));
 		if (myTab == NULL) {// on vérifie que notre nouveau tableau ne soit pas vide
 			printf_s("memoire insuffisante");
 			return NULL;
 		}
 		else {
-			*(myTab + *nbElts + 1) = element;
-			*nbElts++;
+			tab = myTab;
 			*size += TAILLEAJOUT;
-			return myTab;
+			tab[*nbElts] = element;
+			*nbElts++;
+			return tab;
 		}
 
 	}
