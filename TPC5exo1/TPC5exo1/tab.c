@@ -34,7 +34,7 @@ int * ajoutElementDansTableau(int* tab, int* size, int* nbElts, int element) {
 	}
 	if (*nbElts < *size) {// on vérifie le cas qui nous arrange pour éviter d'agrandir le tableau
 		tab [*nbElts] = element;
-		*nbElts++;
+		nbElts++;
 		return tab;
 	}
 	else {
@@ -48,7 +48,7 @@ int * ajoutElementDansTableau(int* tab, int* size, int* nbElts, int element) {
 			tab = myTab;
 			*size += TAILLEAJOUT;
 			tab[*nbElts] = element;
-			*nbElts++;
+			nbElts++;
 			return tab;
 		}
 
