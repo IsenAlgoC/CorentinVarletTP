@@ -28,3 +28,14 @@ int incrementArraySize(Tableau* tab, int incrementValue) {// vérifie et agrandit
 	return tab->size + incrementValue ; // on renvoie la nouvelle taille du tableau
 
 }
+
+int setElement(Tableau* tab, int pos, int element) {// ajout d'un élément
+	if (pos > tab->size) {// si le tableau est trop petit
+		incrementArraySize(tab, pos - tab->size);// alors on l'agrandit
+	}
+	if (pos < 1) {// si on veut ajouter une valeur dans une case impossible
+		return 0;
+	}
+	tab->elt[pos - 1] = element;// on ajoute l'element à la position souhaité
+	return pos;
+}
