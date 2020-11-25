@@ -46,7 +46,7 @@ int displayElements(Tableau* tab, int startPos, int  endPos) {//affiche une part
 		startPos = endPos;
 		endPos = tpm;
 	}
-	if (tab->size == NULL) {
+	if (tab->elt == NULL) {
 		return -1;
 	}
 	if ((endPos > tab->size) || (startPos < 1)) {//on vérifie si les valeurs ne sont pas incohérente
@@ -60,5 +60,28 @@ int displayElements(Tableau* tab, int startPos, int  endPos) {//affiche une part
 }
 
 int deleteElements(Tableau* tab, int startPos, int endPos) {
+	if (startPos >= endPos) {// on inverse les deux valeurs si la position de début est plus grande que la position de fin
+		int tpm = startPos;
+		startPos = endPos;
+		endPos = tpm;
+	}
+	if (tab->elt == NULL) {
+		return -1;
+	}
+	if ((endPos > tab->size) || (startPos < 1)) {//on vérifie si les valeurs ne sont pas incohérente
+		return -1;
+	}
+	int *tab2 = tab->elt;
+	int compteur = 0;
+	int i = 0;
+	for (i = 0; i < tab->size; i++) {
+		if (i<(startPos - 1) || i>(endPos - 1)) {// on change les valeurs dans le tableau
+			tab->elt[compteur] = tab2[i];
+			compteur++;
+		}
+	}
+	return (tab->size - endPos - startPos + 1);
+
+
 
 }
