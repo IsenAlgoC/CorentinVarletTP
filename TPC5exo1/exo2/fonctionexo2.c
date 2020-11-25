@@ -39,3 +39,26 @@ int setElement(Tableau* tab, int pos, int element) {// ajout d'un élément
 	tab->elt[pos - 1] = element;// on ajoute l'element à la position souhaité
 	return pos;
 }
+
+int displayElements(Tableau* tab, int startPos, int  endPos) {//affiche une partie du tableau
+	if (startPos >= endPos) {// on inverse les deux valeurs si la position de début est plus grande que la position de fin
+		int tpm = startPos;
+		startPos = endPos;
+		endPos = tpm;
+	}
+	if (tab->size == NULL) {
+		return -1;
+	}
+	if ((endPos > tab->size) || (startPos < 1)) {//on vérifie si les valeurs ne sont pas incohérente
+		return -1;
+	}
+	int compt = startPos;
+	for (compt = startPos; compt < (endPos + 1); compt++) {//on affiche les éléments à la suite
+		printf_s("\n%d", tab->elt[compt-1]);
+	}
+	return 0;
+}
+
+int deleteElements(Tableau* tab, int startPos, int endPos) {
+
+}

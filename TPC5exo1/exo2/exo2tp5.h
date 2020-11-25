@@ -9,3 +9,5 @@ typedef struct Tableau {
 Tableau newArray();
 int incrementArraySize(Tableau* tab, int incrementValue);
 int setElement(Tableau* tab, int pos, int element);
+int displayElements(Tableau* tab, int startPos, int endPos);
+int deleteElements(Tableau* tab, int startPos, int endPos);
