@@ -124,7 +124,7 @@ void supprimer_un_contact_dans_rep(Repertoire *rep, int indice) {
 void affichage_enreg(Enregistrement enr)
 {
 	// code à compléter ici
-
+	printf_s("%c %c %c", enr.nom, enr.prenom, enr.tel);
 
 } /* fin affichage_enreg */
   /**********************************************************************/
