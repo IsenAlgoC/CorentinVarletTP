@@ -126,7 +126,7 @@ void supprimer_un_contact_dans_rep(Repertoire *rep, int indice) {
 void affichage_enreg(Enregistrement enr)
 {
 	// code à compléter ici
-	printf_s("%c %c %c", enr.nom, enr.prenom, enr.tel);
+	printf_s("%s %s %s", enr.nom, enr.prenom, enr.tel);
 
 } /* fin affichage_enreg */
   /**********************************************************************/
@@ -172,13 +172,16 @@ void affichage_enreg_frmt(Enregistrement enr)
 		
 	}
 	printf_s("\n");
+
+	//printf("%30s%30s%30s", );
 	
 } /* fin affichage_enreg */
 
 
   /**********************************************************************/
   /* test si dans l'ordre alphabetique, un enregistrement est apres     */
-  /* un autre                                                           */
+  /* un autre                */
+  /*on compare si enr2 est plus grand que enr1 */
   /**********************************************************************/
 bool est_sup(Enregistrement enr1, Enregistrement enr2)
 {
@@ -186,11 +189,11 @@ bool est_sup(Enregistrement enr1, Enregistrement enr2)
 	if (strcmp(enr1.nom, enr2.nom)<0) {
 		return true;
 	}
-	if ((strcmp(enr1.nom, enr2.nom )== 0)) {
+	if ((strcmp(enr1.nom, enr2.nom )== 0)) {// si 2 personnes ont le meme nom
 		if ((strcmp(enr1.prenom, enr2.prenom) < 0)) {
 			return true;
 		}
-		if ((strcmp(enr1.prenom, enr2.prenom) == 0) ){
+		if ((strcmp(enr1.prenom, enr2.prenom) == 0) ){// si deux personne ont le même nom et prenom
 			for (int i = 0; i < MAX_TEL; i++) {
 				if (enr1.tel < enr2.tel) {
 					return true;
@@ -212,19 +215,22 @@ void trier(Repertoire *rep)
 
 #ifdef IMPL_TAB
 	 //ajouter code ici pour tableau
-	int compt = 0, tmp = 0;
-	Enregistrement tableau;
-	for (compt = 0; compt < (rep->nb_elts-1); compt++) {
-		for (tmp = (rep->nb_elts -1);tmp > compt ; tmp --) {
-			if (!est_sup(*(rep->tab + compt), *(rep->tab + tmp))) {
-				tableau = *(rep->tab + tmp);
-				*(rep->tab + compt) = *(rep->tab + tmp);
-				*(rep->tab + tmp) = tableau;
+	int a = 0;
+	Enregistrement tmp;
+	Enregistrement min;
+	for (int compt = 0; compt < rep->nb_elts - 1; compt++) {
+		min = rep->tab[compt];
 
+		for (int var = 0; var < rep->nb_elts; var++) {
+
+			if (est_sup(min, rep->tab[var])) {
+				a = var;              
+				min = rep->tab[var];
 			}
-
 		}
-
+		tmp = rep->tab[compt];
+		rep->tab[compt] = min;
+		rep->tab[a] = tmp;
 	}
 #else
 #ifdef IMPL_LIST
@@ -260,6 +266,27 @@ int rechercher_nom(Repertoire *rep, char nom[], int ind)
 #ifdef IMPL_TAB
 							// ajouter code ici pour tableau
 	
+	
+	int compt = 0;
+	for (compt = 0; compt < MAX_NOM; compt++) {
+		tmp_nom[compt] = (nom[compt]);
+
+	}
+
+	_strupr_s(tmp_nom, MAX_NOM);
+
+	ind_fin = rep->nb_elts;
+	while( (trouve == false) && ( i != ind_fin)){
+		strcpy_s(tmp_nom2, MAX_NOM,rep->tab[i].nom);
+		_strupr_s(tmp_nom2, MAX_NOM);
+
+		if (strcmp(tmp_nom, tmp_nom2) == 0) {
+			trouve = true;
+			
+		}
+		i++;
+	}
+	
 #else
 #ifdef IMPL_LIST
 							// ajouter code ici pour Liste
@@ -267,7 +294,7 @@ int rechercher_nom(Repertoire *rep, char nom[], int ind)
 #endif
 #endif
 
-	return((trouve) ? i : -1);
+	return((trouve) ? (i) : -1);
 } /* fin rechercher_nom */
 
   /*********************************************************************/
@@ -276,7 +303,7 @@ int rechercher_nom(Repertoire *rep, char nom[], int ind)
 void compact(char *s)
 {
 	// compléter code ici
-
+	//isdigit verifie si c'est un caractère non numérique 
 	return;
 }
 
