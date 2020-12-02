@@ -182,9 +182,11 @@ void affichage_enreg_frmt(Enregistrement enr)
 bool est_sup(Enregistrement enr1, Enregistrement enr2)
 {
 	// code à compléter ici
-	
+	if (strcmp(enr1.nom, enr2.nom)<0) {
+		return true;
 
-	return(false);
+	}
+	else return(false);
 
 }
  
@@ -197,10 +199,19 @@ void trier(Repertoire *rep)
 
 #ifdef IMPL_TAB
 	// ajouter code ici pour tableau
-	
+	int compt = 0, tmp = 0;
+	for (compt = 0; compt <= rep->nb_elts; compt++) {
+		for (tmp = 0; tmp <= rep->nb_elts; tmp++) {
+			if (est_sup(*(rep->tab + compt), *(rep->tab + tmp))) {
+				break;
+			}
+			else {
+				rep->tab
+			}
 
+		}
 
-	
+	}
 #else
 #ifdef IMPL_LIST
 	// ajouter code ici pour Liste
