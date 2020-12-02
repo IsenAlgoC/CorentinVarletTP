@@ -184,7 +184,19 @@ bool est_sup(Enregistrement enr1, Enregistrement enr2)
 	// code à compléter ici
 	if (strcmp(enr1.nom, enr2.nom)<0) {
 		return true;
+	}
+	if (strcmp(enr1.nom, enr2.nom == 0)) {
+		if (strcmp(enr1.prenom, enr2.prenom < 0)) {
+			return true;
+		}
+		if (strcmp(enr1.prenom, enr2.prenom == 0) ){
+			for (int i = 0; i < MAX_TEL; i++) {
+				if (enr1.tel < enr2.tel) {
+					return true;
+				}
+			}
 
+		}
 	}
 	else return(false);
 
@@ -203,11 +215,9 @@ void trier(Repertoire *rep)
 	for (compt = 0; compt <= rep->nb_elts; compt++) {
 		for (tmp = 0; tmp <= rep->nb_elts; tmp++) {
 			if (est_sup(*(rep->tab + compt), *(rep->tab + tmp))) {
-				break;
+				
 			}
-			else {
-				rep->tab
-			}
+			
 
 		}
 
