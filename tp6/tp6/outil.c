@@ -32,6 +32,7 @@ int ajouter_un_contact_dans_rep(Repertoire *rep, Enregistrement enr)
 		rep->nb_elts += 1;
 		rep->est_trie = false;
 
+
 	}
 	else {
 		return(ERROR);
@@ -185,11 +186,11 @@ bool est_sup(Enregistrement enr1, Enregistrement enr2)
 	if (strcmp(enr1.nom, enr2.nom)<0) {
 		return true;
 	}
-	if (strcmp(enr1.nom, enr2.nom == 0)) {
-		if (strcmp(enr1.prenom, enr2.prenom < 0)) {
+	if ((strcmp(enr1.nom, enr2.nom )== 0)) {
+		if ((strcmp(enr1.prenom, enr2.prenom) < 0)) {
 			return true;
 		}
-		if (strcmp(enr1.prenom, enr2.prenom == 0) ){
+		if ((strcmp(enr1.prenom, enr2.prenom) == 0) ){
 			for (int i = 0; i < MAX_TEL; i++) {
 				if (enr1.tel < enr2.tel) {
 					return true;
@@ -210,14 +211,17 @@ void trier(Repertoire *rep)
 {
 
 #ifdef IMPL_TAB
-	// ajouter code ici pour tableau
+	 //ajouter code ici pour tableau
 	int compt = 0, tmp = 0;
-	for (compt = 0; compt <= rep->nb_elts; compt++) {
-		for (tmp = 0; tmp <= rep->nb_elts; tmp++) {
-			if (est_sup(*(rep->tab + compt), *(rep->tab + tmp))) {
-				
+	Enregistrement tableau;
+	for (compt = 0; compt < (rep->nb_elts-1); compt++) {
+		for (tmp = (rep->nb_elts -1);tmp > compt ; tmp --) {
+			if (!est_sup(*(rep->tab + compt), *(rep->tab + tmp))) {
+				tableau = *(rep->tab + tmp);
+				*(rep->tab + compt) = *(rep->tab + tmp);
+				*(rep->tab + tmp) = tableau;
+
 			}
-			
 
 		}
 
