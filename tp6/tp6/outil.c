@@ -126,7 +126,7 @@ void supprimer_un_contact_dans_rep(Repertoire *rep, int indice) {
 void affichage_enreg(Enregistrement enr)
 {
 	// code à compléter ici
-	printf_s("%s %s %s", enr.nom, enr.prenom, enr.tel);
+	printf_s("%s\t %s\t %s", enr.nom, enr.prenom, enr.tel);
 
 } /* fin affichage_enreg */
   /**********************************************************************/
@@ -140,40 +140,41 @@ void affichage_enreg_frmt(Enregistrement enr)
 	// comme fonction affichage_enreg, mais avec présentation alignées des infos
 	printf_s("| ");
 	int space; int compt = 0;
-	do {
+	do {							// on affiche le nom
 		printf_s("%c", enr.nom[compt]);
 		compt++;
 	} while (enr.nom[compt] != 0);
-	space = MAX_NOM - compt + 2;
-	for (int comp = 0; comp < space; comp++) {
-		printf_s(" ");
-	}
-	
-	printf_s("| ");
-	compt = 0;
-	do {
-		printf_s("%c", enr.prenom[compt]);
-		compt++;
-	} while (enr.prenom[compt] != 0);
-	space = MAX_NOM - compt + 2;
+	space = MAX_NOM - compt + 2;	// on choisit l'écart entre les 2 colonnes 
 	for (int comp = 0; comp < space; comp++) {
 		printf_s(" ");
 	}
 
 	printf_s("| ");
 	compt = 0;
-	do {
+	do {							// on affiche le prénom 
+		printf_s("%c", enr.prenom[compt]);
+		compt++;
+	} while (enr.prenom[compt] != 0);
+	space = MAX_NOM - compt + 2;  // on choisit l'écart entre les deux colonnes 
+	for (int comp = 0; comp < space; comp++) {
+		printf_s(" ");
+	}
+
+	printf_s("| ");
+	compt = 0;
+	do {							// on affiche le numéro de téléphone 
 		printf_s("%c", enr.tel[compt]);
 		compt++;
 	} while (enr.tel[compt] != 0);
 	space = MAX_NOM - compt + 2;
 	for (int comp = 0; comp < space; comp++) {
 		printf_s(" ");
-		
+
 	}
 	printf_s("\n");
 
-	//printf("%30s%30s%30s", );
+	
+	//printf_s("%50s%30|s%15|s",enr.nom, enr.prenom, enr.tel );
 	
 } /* fin affichage_enreg */
 
@@ -215,22 +216,20 @@ void trier(Repertoire *rep)
 
 #ifdef IMPL_TAB
 	 //ajouter code ici pour tableau
-	int a = 0;
-	Enregistrement tmp;
-	Enregistrement min;
-	for (int compt = 0; compt < rep->nb_elts - 1; compt++) {
-		min = rep->tab[compt];
-
-		for (int var = 0; var < rep->nb_elts; var++) {
-
-			if (est_sup(min, rep->tab[var])) {
-				a = var;              
-				min = rep->tab[var];
+	Enregistrement tableau_tampon;
+	int compteur = 0;
+	int tmp = 0;
+	for ( compteur = 0; compteur < (rep->nb_elts - 1); compteur++)
+	{
+		for ( tmp = (rep->nb_elts - 1); tmp > compteur; tmp--) // on compare les noms un à un en remontant
+		{
+			if (!est_sup(*(rep->tab + compteur), *(rep->tab + tmp))) {// condition de permutations
+				tableau_tampon = *(rep->tab + compteur);
+				*(rep->tab + compteur) = *(rep->tab + tmp);
+				*(rep->tab + tmp) = tableau_tampon;
 			}
+
 		}
-		tmp = rep->tab[compt];
-		rep->tab[compt] = min;
-		rep->tab[a] = tmp;
 	}
 #else
 #ifdef IMPL_LIST
@@ -294,7 +293,7 @@ int rechercher_nom(Repertoire *rep, char nom[], int ind)
 #endif
 #endif
 
-	return((trouve) ? (i) : -1);
+	return((trouve) ? (i-1) : -1);
 } /* fin rechercher_nom */
 
   /*********************************************************************/
@@ -304,6 +303,20 @@ void compact(char *s)
 {
 	// compléter code ici
 	//isdigit verifie si c'est un caractère non numérique 
+	int compteur = 0;
+	int var = 0;
+	if (s == NULL) {// on vérifie si l'adresse n'est pas vide
+		return;
+	
+	}
+	for (compteur = 0; compteur < strlen(s); compteur++) {// on recherche les evnetuels caractère non numeriques pour les supprimer 
+		if (isdigit(*(s + compteur)) == 0) {
+			for (var = s + compteur; var < strlen(s); var++) {
+				s[var] = s[var + 1];// on fait un décalage à gauche pour éliminer la valeur non désirée
+				s[strlen(s)] = 0;
+			}
+		}
+	}
 	return;
 }
 
