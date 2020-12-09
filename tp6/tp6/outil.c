@@ -366,7 +366,7 @@ int sauvegarder(Repertoire *rep, char nom_fichier[])
 		fprintf("%s\n", GetElementAt(rep->liste, compt)->pers.tel);
 		tmp = tmp->next;
 		compt++;
-	} while (tmp = !NULL);
+	} while (tmp =! NULL);
 
 #endif
 #endif
