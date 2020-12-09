@@ -85,6 +85,9 @@ int InsertElementAt(LinkedList *Liste, int i, Enregistrement pers) {
 			//
 			//
 			//
+				Liste->tail = NewElement;
+				Liste->head = NewElement;
+				Liste->size = 1;
 		}
 			else {
 				return(0);
@@ -99,6 +102,9 @@ int InsertElementAt(LinkedList *Liste, int i, Enregistrement pers) {
 			//
 			//
 			//
+				Liste->tail->next = NewElement;
+				Liste->tail = NewElement;
+				Liste->size += 1;
 			}
 			else {
 				return(0);

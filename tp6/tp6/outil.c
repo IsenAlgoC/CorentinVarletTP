@@ -10,7 +10,7 @@
 #define SQUELET
 /**************************************************************************/
 /* Compléter votre nom ici                                                */
-/*   Nom :            VARLET            Prénom :       CORENTIN                        */
+/*   Nom :            VARLET            Prénom :       CORENTIN           */
 /**************************************************************************/
 
 extern bool modif;
@@ -53,11 +53,16 @@ int ajouter_un_contact_dans_rep(Repertoire *rep, Enregistrement enr)
 
 	}
 	else {
-			//
-			// compléter code ici pour Liste
-			//
-			//
-			//
+		if (rep->nb_elts < MAX_ENREG) {
+			while (inserted) {
+				NewLinkedListELem* people;// on ajoute la nouvelle personne
+				people->next = NULL;
+				people->pers = enr;
+
+				int compt = 0;// on trie la liste 
+				if (est_sup()
+			}
+		}
 
 
 
@@ -293,6 +298,17 @@ int rechercher_nom(Repertoire *rep, char nom[], int ind)
 #else
 #ifdef IMPL_LIST
 							// ajouter code ici pour Liste
+	SingleLinkedListElem* tmp = rep->liste->head;		// positionne un pointeur sur la tête de la liste chaînée
+	for (i = 0; i < rep->liste->size; i++) {
+		if (_stricmp(nom, tmp->pers.nom) == 0) {		// compare le nom tapé avec le nom du maillon choisi
+			trouve = true;
+			return i - 1;
+			break;										// sort de la boucle si le nom a été trouvé
+		}
+		tmp = tmp->next;								//positionne le pointeur sur le maillon suivant 
+	}
+	return -1;
+
 	
 #endif
 #endif
