@@ -59,6 +59,9 @@ int ajouter_un_contact_dans_rep(Repertoire *rep, Enregistrement enr)
 			//
 			//
 
+
+
+
 	}
 
 
@@ -174,7 +177,8 @@ void affichage_enreg_frmt(Enregistrement enr)
 	printf_s("\n");
 
 	
-	//printf_s("%50s%30|s%15|s",enr.nom, enr.prenom, enr.tel );
+	//printf_s("|%s%30|%s%20|%s",enr.nom, enr.prenom, enr.tel );
+	printf_s("\n");
 	
 } /* fin affichage_enreg */
 

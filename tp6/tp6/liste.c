@@ -123,8 +123,40 @@ int DeleteLinkedListElem(LinkedList * list, SingleLinkedListElem * item) {
 	// compléter code ici
 	//
 	//
+	SingleLinkedListElem* tmp = list->head;
+	SingleLinkedListElem* previous = NULL;
+	if ((item == list->head) && (item == list->tail)) {
+		list->head = NULL;
+		list->tail = NULL;
+		list->size = 0;
+		free(item);
+		return(1);
+	}
 
+	if (item == list->head) {
+		list->head = item->next;
+		list->size--;
+		free(item);
+		return(1);
+	}
 
-	return(0);  // pas trouvé
+	while ((tmp != NULL) && (tmp != item)) {
+		previous = tmp;
+		tmp = tmp->next;
+	}
+	if ((previous != NULL) && (tmp == item) && (tmp->next == NULL)) {
+		list->tail = previous;
+		previous->next = NULL;
+		list->size--;
+		free(item);
+		return(1);
+	}
+	if ((previous != NULL) && (tmp == item) && (tmp->next != NULL)) {
+		previous->next = item->next;
+		list->size--;
+		free(item);
+		return(1);
+	}
+	return(0);// pas trouvé
 }
 
