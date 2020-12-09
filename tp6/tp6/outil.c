@@ -53,16 +53,7 @@ int ajouter_un_contact_dans_rep(Repertoire *rep, Enregistrement enr)
 
 	}
 	else {
-		if (rep->nb_elts < MAX_ENREG) {
-			while (inserted) {
-				NewLinkedListELem* people;// on ajoute la nouvelle personne
-				people->next = NULL;
-				people->pers = enr;
-
-				int compt = 0;// on trie la liste 
-				if (est_sup()
-			}
-		}
+		
 
 
 
@@ -146,43 +137,8 @@ void affichage_enreg_frmt(Enregistrement enr)
 {
 	// code à compléter ici
 	// comme fonction affichage_enreg, mais avec présentation alignées des infos
-	printf_s("| ");
-	int space; int compt = 0;
-	do {							// on affiche le nom
-		printf_s("%c", enr.nom[compt]);
-		compt++;
-	} while (enr.nom[compt] != 0);
-	space = MAX_NOM - compt + 2;	// on choisit l'écart entre les 2 colonnes 
-	for (int comp = 0; comp < space; comp++) {
-		printf_s(" ");
-	}
-
-	printf_s("| ");
-	compt = 0;
-	do {							// on affiche le prénom 
-		printf_s("%c", enr.prenom[compt]);
-		compt++;
-	} while (enr.prenom[compt] != 0);
-	space = MAX_NOM - compt + 2;  // on choisit l'écart entre les deux colonnes 
-	for (int comp = 0; comp < space; comp++) {
-		printf_s(" ");
-	}
-
-	printf_s("| ");
-	compt = 0;
-	do {							// on affiche le numéro de téléphone 
-		printf_s("%c", enr.tel[compt]);
-		compt++;
-	} while (enr.tel[compt] != 0);
-	space = MAX_NOM - compt + 2;
-	for (int comp = 0; comp < space; comp++) {
-		printf_s(" ");
-
-	}
-	printf_s("\n");
-
 	
-	//printf_s("|%s%30|%s%20|%s",enr.nom, enr.prenom, enr.tel );
+	printf_s("|%-30s|%-20s|%-20s",enr.nom, enr.prenom, enr.tel );
 	printf_s("\n");
 	
 } /* fin affichage_enreg */
@@ -298,14 +254,14 @@ int rechercher_nom(Repertoire *rep, char nom[], int ind)
 #else
 #ifdef IMPL_LIST
 							// ajouter code ici pour Liste
-	SingleLinkedListElem* tmp = rep->liste->head;		// positionne un pointeur sur la tête de la liste chaînée
+	SingleLinkedListElem* tmp = rep->liste->head;		// on met le pointeur sur la tête de la liste
 	for (i = 0; i < rep->liste->size; i++) {
-		if (_stricmp(nom, tmp->pers.nom) == 0) {		// compare le nom tapé avec le nom du maillon choisi
+		if (_stricmp(nom, tmp->pers.nom) == 0) {		// on compare en allant notre maillon avec les autres
 			trouve = true;
 			return i - 1;
-			break;										// sort de la boucle si le nom a été trouvé
+			break;										
 		}
-		tmp = tmp->next;								//positionne le pointeur sur le maillon suivant 
+		tmp = tmp->next;								
 	}
 	return -1;
 
@@ -350,7 +306,20 @@ int sauvegarder(Repertoire *rep, char nom_fichier[])
 	FILE *fic_rep;					/* le fichier */
 #ifdef IMPL_TAB
 	// ajouter code ici pour tableau
+	if( (fopen_s(&fic_rep, nom_fichier, " w +") != 0) || (fic_rep==NULL)){// on vérifie si le fichier est ouvert et s'il existe
+		return ERROR;
+	}
+	int compt = 0;
+	for (compt = 0; compt < rep->est_trie; compt++) {// on vient écrire nom, prénom, numéro dans le fichier
+		fprintf("%s;", rep->tab[compt].nom);
+		fprintf("%s;", rep->tab[compt].prenom);
+		fprintf("%s\n", rep->tab[compt].tel);
+	}
+	fclose(fic_rep);
 	
+
+
+
 #else
 #ifdef IMPL_LIST
 	// ajouter code ici pour Liste
