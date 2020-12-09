@@ -88,6 +88,7 @@ int InsertElementAt(LinkedList *Liste, int i, Enregistrement pers) {
 				Liste->tail = NewElement;
 				Liste->head = NewElement;
 				Liste->size = 1;
+				NewElement->next = CurrentElement;
 		}
 			else {
 				return(0);

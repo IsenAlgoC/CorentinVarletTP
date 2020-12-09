@@ -20,15 +20,17 @@ extern bool modif;
 /*  Ajout d'un contact dans le répertoire stocké en mémoire           */
 /**********************************************************************/
 
-int ajouter_un_contact_dans_rep(Repertoire *rep, Enregistrement enr)
+int ajouter_un_contact_dans_rep(Repertoire* rep, Enregistrement enr)
 {
+	compact(enr.tel);
+	modif = true;
 #ifdef IMPL_TAB
 	// compléter code ici pour tableau
 	int idx;
 
 	if (rep->nb_elts < MAX_ENREG)
 	{
-		*(rep->tab + rep->nb_elts ) = enr;
+		*(rep->tab + rep->nb_elts) = enr;
 		rep->nb_elts += 1;
 		rep->est_trie = false;
 
@@ -38,7 +40,7 @@ int ajouter_un_contact_dans_rep(Repertoire *rep, Enregistrement enr)
 		return(ERROR);
 	}
 
-	
+
 #else
 #ifdef IMPL_LIST
 
@@ -53,13 +55,40 @@ int ajouter_un_contact_dans_rep(Repertoire *rep, Enregistrement enr)
 
 	}
 	else {
+		int compt = 0;
+		SingleLinkedListElem* tmp = rep->liste->head;
+		for (compt = 0; compt < rep->liste->size; compt++) {
+			if (est_sup(enr, tmp->pers) == false) {							// on compare l'enregistrement avec le maillon
+				if (InsertElementAt(rep->liste, compt, enr) != 0) {			// on met les informations de la personne dans le maillon correspondant si le nom se situe avant dans l'alphabet
+					rep->nb_elts += 1;
+					modif = true;
+					rep->est_trie = true;
+					inserted = true;
+					return(OK);
+				}
+				else {
+					return ERROR;
+				}
+			}
+			else {
+				tmp = tmp->next;
+			}
 		
-
-
-
-
+			if (compt == rep->liste->size - 1) {
+				if (InsertElementAt(rep->liste, compt + 1, enr) != 0) {    //on vérifie si on peut ajouter les informations dans le maillon
+					rep->nb_elts += 1;
+					modif = true;
+					rep->est_trie = true;
+					inserted = true;
+					return(OK);
+				}
+			}
+			else {
+				return(ERROR);
+			}
+		}
 	}
-
+	
 
 #endif
 	
@@ -67,8 +96,9 @@ int ajouter_un_contact_dans_rep(Repertoire *rep, Enregistrement enr)
 
 
 	return(OK);
+}
 
-} /* fin ajout */
+ /* fin ajout */
   /**********************************************************************/
   /* supprime du répertoire l'enregistrement dont l'indice est donné en */
   /*   paramètre       et place modif = true                            */
@@ -92,8 +122,9 @@ void supprimer_un_contact_dans_rep(Repertoire *rep, int indice) {
 			modif = false;
 		}
 	}
-
+	modif = true;
 	return;
+	
 } /* fin supprimer */
 
 #else
@@ -206,7 +237,7 @@ void trier(Repertoire *rep)
 
 
 	rep->est_trie = true;
-
+	modif = true;
 } /* fin trier */
 
   /**********************************************************************/
@@ -285,10 +316,10 @@ void compact(char *s)
 		return;
 	
 	}
-	for (compteur = 0; compteur < strlen(s); compteur++) {// on recherche les evnetuels caractère non numeriques pour les supprimer 
+	for (compteur = 0; compteur < strlen(s); compteur++) {// on recherche les eventuels caractère non numeriques pour les supprimer 
 		if (isdigit(*(s + compteur)) == 0) {
 			for (var = s + compteur; var < strlen(s); var++) {
-				s[var] = s[var + 1];// on fait un décalage à gauche pour éliminer la valeur non désirée
+				s[var] = s[var + 1];// on fait un décalage à gauche pour retirer le caractère non désirée
 				s[strlen(s)] = 0;
 			}
 		}
@@ -323,7 +354,20 @@ int sauvegarder(Repertoire *rep, char nom_fichier[])
 #else
 #ifdef IMPL_LIST
 	// ajouter code ici pour Liste
-	//test
+	if ((fopen_s(&fic_rep, nom_fichier, " w +") != 0) || (fic_rep == NULL)) {// on vérifie si le fichier est ouvert et s'il existe
+		return ERROR;
+	}
+	SingleLinkedListElem* tmp = rep->liste->head;
+	int compt = 0;
+	do {
+
+		fprintf("%s;", GetElementAt(rep->liste,compt)->pers.nom);
+		fprintf("%s;", GetElementAt(rep->liste, compt)->pers.prenom);
+		fprintf("%s\n", GetElementAt(rep->liste, compt)->pers.tel);
+		tmp = tmp->next;
+		compt++;
+	} while (tmp = !NULL);
+
 #endif
 #endif
 
