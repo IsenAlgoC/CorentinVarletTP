@@ -341,7 +341,7 @@ int sauvegarder(Repertoire *rep, char nom_fichier[])
 		return ERROR;
 	}
 	int compt = 0;
-	for (compt = 0; compt < rep->est_trie; compt++) {// on vient écrire nom, prénom, numéro dans le fichier
+	for (compt = 0; compt < rep->nb_elts; compt++) {// on vient écrire nom, prénom, numéro dans le fichier
 		fprintf("%s;", rep->tab[compt].nom);
 		fprintf("%s;", rep->tab[compt].prenom);
 		fprintf("%s\n", rep->tab[compt].tel);
