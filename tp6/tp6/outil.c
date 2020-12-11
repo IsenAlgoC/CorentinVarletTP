@@ -50,44 +50,40 @@ int ajouter_un_contact_dans_rep(Repertoire* rep, Enregistrement enr)
 			rep->nb_elts += 1;
 			modif = true;
 			rep->est_trie = true;
-			return(OK);
+			inserted = true;
 		}
 
 	}
+	int compt = 0;
 	else {
-		int compt = 0;
-		SingleLinkedListElem* tmp = rep->liste->head;
-		for (compt = 0; compt < rep->liste->size; compt++) {
-			if (est_sup(enr, tmp->pers) == false) {							// on compare l'enregistrement avec le maillon
-				if (InsertElementAt(rep->liste, compt, enr) != 0) {			// on met les informations de la personne dans le maillon correspondant si le nom se situe avant dans l'alphabet
-					rep->nb_elts += 1;
-					modif = true;
-					rep->est_trie = true;
-					inserted = true;
-					return(OK);
+		if (rep->nb_elts < MAX_ENREG) {
+			SingleLinkedListElem* ele = rep->liste->head;
+			while (!inserted && compt <= rep->liste->size) {// on cherche sa place en allant dans la liste pour pouvoir le placer dans l'ordre alphabétique
+				if (est_sup(enr, ele->pers)) {// cas dans la liste 
+					if (InsertElementAt(rep->liste, compt, enr) != 0) {// quand on a trouvé sa place on regarde si on peut l'insérer
+						rep->nb_elts += 1;
+						rep->est_trie = true;
+						inserted = true;
+					}
 				}
-				else {
-					return ERROR;
+				if (ele == NULL) {// cas fin de liste
+					if (InsertElementAt(rep->liste, compt, enr) != 0) {
+						rep->nb_elts += 1;
+						rep->est_trie = true;
+						inserted = true;
+					}
 				}
+				ele = ele->next;// on passe de maille en maille
 			}
-			else {
-				tmp = tmp->next;
-			}
-		
-			if (compt == rep->liste->size - 1) {
-				if (InsertElementAt(rep->liste, compt + 1, enr) != 0) {    //on vérifie si on peut ajouter les informations dans le maillon
-					rep->nb_elts += 1;
-					modif = true;
-					rep->est_trie = true;
-					inserted = true;
-					return(OK);
-				}
-			}
-			else {
-				return(ERROR);
-			}
+			compt++;
 		}
 	}
+	else {
+		return(ERROR);
+	}
+			
+		
+	
 	
 
 #endif
@@ -343,9 +339,9 @@ int sauvegarder(Repertoire *rep, char nom_fichier[])
 	}
 	int compt = 0;
 	for (compt = 0; compt < rep->nb_elts; compt++) {// on vient écrire nom, prénom, numéro dans le fichier
-		fprintf("%s;", rep->tab[compt].nom);
-		fprintf("%s;", rep->tab[compt].prenom);
-		fprintf("%s\n", rep->tab[compt].tel);
+		fprintf(fic_rep, "%s;", rep->tab[compt].nom);
+		fprintf(fic_rep, "%s;", rep->tab[compt].prenom);
+		fprintf(fic_rep, "%s\n", rep->tab[compt].tel);
 	}
 	fclose(fic_rep);
 	
@@ -364,7 +360,8 @@ int sauvegarder(Repertoire *rep, char nom_fichier[])
 
 		fprintf("%s;", GetElementAt(rep->liste,compt)->pers.nom);
 		fprintf("%s;", GetElementAt(rep->liste, compt)->pers.prenom);
-		fprintf("%s\n", GetElementAt(rep->liste, compt)->pers.tel);
+		fprintf("%s", GetElementAt(rep->liste, compt)->pers.tel);
+		fprintf("\n");
 		tmp = tmp->next;
 		compt++;
 	} while (tmp != NULL);
@@ -434,8 +431,8 @@ int charger(Repertoire *rep, char nom_fichier[])
 					if (lire_champ_suivant(buffer, &idx, enr.prenom, MAX_NOM, SEPARATEUR) == OK) {
 						idx++;
 						if (lire_champ_suivant(buffer, &idx, enr.tel, MAX_TEL, SEPARATEUR) == OK) {
-							InsertElementAt(rep->liste, num_rec, enr);
-							num_rec ++;
+							//InsertElementAt(rep->liste, num_rec, enr);
+							num_rec++;
 						}
 					}
 				}
