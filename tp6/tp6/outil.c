@@ -285,7 +285,7 @@ int rechercher_nom(Repertoire *rep, char nom[], int ind)
 #else
 #ifdef IMPL_LIST
 							// ajouter code ici pour Liste
-	SingleLinkedListElem* tmp = rep->liste->head;		// on met le pointeur sur la tête de la liste
+	SingleLinkedListElem* tmp = rep->liste->head;		// on met le pointeur sur la tête 
 	for (i = 0; i < rep->liste->size; i++) {
 		if (_stricmp(nom, tmp->pers.nom) == 0) {		// on compare en allant notre maillon avec les autres
 			trouve = true;
@@ -426,7 +426,7 @@ int charger(Repertoire *rep, char nom_fichier[])
 														// ajouter code implemention liste
 #endif
 #endif
-
+				
 
 
 
