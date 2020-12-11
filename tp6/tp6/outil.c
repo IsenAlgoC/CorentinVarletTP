@@ -79,7 +79,7 @@ int ajouter_un_contact_dans_rep(Repertoire* rep, Enregistrement enr)
 		}
 	}
 	else {
-		return(ERROR);// renvoie une erreur sinon
+		return(ERROR);
 	}
 			
 		
