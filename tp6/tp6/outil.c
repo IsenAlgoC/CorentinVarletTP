@@ -427,7 +427,23 @@ int charger(Repertoire *rep, char nom_fichier[])
 														// ajouter code implemention liste
 #endif
 #endif
-				
+				Enregistrement enr;
+				if (lire_champ_suivant(buffer, &idx, enr.nom, MAX_NOM, SEPARATEUR) == OK)
+				{
+					idx++;
+					if (lire_champ_suivant(buffer, &idx, enr.prenom, MAX_NOM, SEPARATEUR) == OK) {
+						idx++;
+						if (lire_champ_suivant(buffer, &idx, enr.tel, MAX_TEL, SEPARATEUR) == OK) {
+							InsertElementAt(rep->liste, num_rec, enr);
+							num_rec ++;
+						}
+					}
+				}
+
+
+
+
+
 
 
 
