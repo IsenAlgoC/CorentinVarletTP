@@ -310,22 +310,23 @@ void compact(char *s)
 {
 	// compléter code ici
 	//isdigit verifie si c'est un caractère non numérique 
-	int compteur = 0;
-	int var = 0;
+	int compt = 0;
+	int tmp = 0;
 	if (s == NULL) {// on vérifie si l'adresse n'est pas vide
 		return;
 	
 	}
-	for (compteur = 0; compteur < strlen(s); compteur++) {// on recherche les eventuels caractère non numeriques pour les supprimer 
-		if (isdigit(*(s + compteur)) == 0) {
-			for (var = s + compteur; var < strlen(s); var++) {
-				s[var] = s[var + 1];// on fait un décalage à gauche pour retirer le caractère non désirée
-				s[strlen(s)] = 0;
-			}
+	for (compt = 0; compt < MAX_TEL; compt++) {
+		if (isdigit(*(s + compt))) { //on recherche les valeur non numérique
+			*(s + tmp) = *(s + compt);
+			tmp++;
 		}
 	}
+	*(s + tmp) = '\0';// on ajoute ce caractère pour marquer la fin de la chaine
 	return;
 }
+	
+
 
 /**********************************************************************/
 /* sauvegarde le répertoire dans le fichier dont le nom est passé en  */
