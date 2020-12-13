@@ -44,6 +44,7 @@ int ajouter_un_contact_dans_rep(Repertoire* rep, Enregistrement enr)
 #else
 #ifdef IMPL_LIST
 
+	int compt = 0;
 	bool inserted = false;
 	if (rep->nb_elts == 0) {
 		if (InsertElementAt(rep->liste, rep->liste->size, enr) != 0) {
@@ -52,9 +53,7 @@ int ajouter_un_contact_dans_rep(Repertoire* rep, Enregistrement enr)
 			rep->est_trie = true;
 			inserted = true;
 		}
-
 	}
-	int compt = 0;
 	else {
 		if (rep->nb_elts < MAX_ENREG) {
 			SingleLinkedListElem* ele = rep->liste->head;
@@ -78,9 +77,7 @@ int ajouter_un_contact_dans_rep(Repertoire* rep, Enregistrement enr)
 			compt++;
 		}
 	}
-	else {
-		return(ERROR);
-	}
+	
 			
 		
 	
@@ -360,8 +357,7 @@ int sauvegarder(Repertoire *rep, char nom_fichier[])
 
 		fprintf("%s;", GetElementAt(rep->liste,compt)->pers.nom);
 		fprintf("%s;", GetElementAt(rep->liste, compt)->pers.prenom);
-		fprintf("%s", GetElementAt(rep->liste, compt)->pers.tel);
-		fprintf("\n");
+		fprintf("%s\n", GetElementAt(rep->liste, compt)->pers.tel);
 		tmp = tmp->next;
 		compt++;
 	} while (tmp != NULL);
@@ -422,8 +418,8 @@ int charger(Repertoire *rep, char nom_fichier[])
 #else
 #ifdef IMPL_LIST
 														// ajouter code implemention liste
-#endif
-#endif
+
+
 				Enregistrement enr;
 				if (lire_champ_suivant(buffer, &idx, enr.nom, MAX_NOM, SEPARATEUR) == OK)
 				{
@@ -431,14 +427,15 @@ int charger(Repertoire *rep, char nom_fichier[])
 					if (lire_champ_suivant(buffer, &idx, enr.prenom, MAX_NOM, SEPARATEUR) == OK) {
 						idx++;
 						if (lire_champ_suivant(buffer, &idx, enr.tel, MAX_TEL, SEPARATEUR) == OK) {
-							//InsertElementAt(rep->liste, num_rec, enr);
+							InsertElementAt(rep->liste, num_rec, enr);
 							num_rec++;
 						}
 					}
 				}
 
 
-
+#endif
+#endif
 
 
 
